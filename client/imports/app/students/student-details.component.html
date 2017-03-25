@@ -1,0 +1,28 @@
+<header *ngIf="student">
+  <h2>{{student.name}}</h2>
+  <p>{{student.birthdate}}</p>
+  <hr/>
+  <h3>Hold</h3>
+  <div *ngIf="classes">
+    <ul>
+      <li *ngFor="let klass of classes | async">
+        <a [routerLink]="['/class', klass._id]">{{klass.name}}</a>
+      </li>
+    </ul>
+  </div>
+  <hr/>
+  <h3>Træninger</h3>
+  <div *ngIf="sessions">
+    <ul>
+      <li *ngFor="let session of sessions">
+        {{session}}
+      </li>
+    </ul>
+  </div>
+  <hr/>
+  <h3>Kontaktperson</h3>
+    <p>{{student.contacts[0].name}}</p>
+    <p>{{student.contacts[0].phone}}</p>
+    <p>{{student.contacts[0].email}}</p>
+</header>
+

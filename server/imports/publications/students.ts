@@ -11,7 +11,7 @@ Meteor.publish('student', function(studentId: string) {
 
 function buildQuery(studentId?: string): Object {
 
-  const isAvailable = {}
+  const isAvailable = { _id: {$exists: true} }
 /*  const isAvailable = {
     $or: [{
       // party is public
@@ -28,7 +28,7 @@ function buildQuery(studentId?: string): Object {
         }
       }]
     }]
-  };*/
+  }; */
 
   if (studentId) {
     return {
