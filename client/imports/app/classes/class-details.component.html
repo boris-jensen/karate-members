@@ -1,0 +1,12 @@
+<header *ngIf="klass">
+  <h2>{{klass.name}}</h2>
+  <button><a [routerLink]="['/attendance', klass._id]">Kryds af</a></button>
+  <div *ngIf="students">
+    <ul>
+        <li *ngFor="let student of students | async">
+            <a [routerLink]="['/students', student._id]">{{student.name}}</a>
+        </li>
+    </ul>
+  </div>
+</header>
+

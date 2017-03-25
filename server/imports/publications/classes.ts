@@ -3,7 +3,11 @@ import { Classes } from '../../../both/collections/classes.collection';
 import { Student } from '../../../both/models/student.model';
 
 Meteor.publish('classes', function() {
-  return Classes.find(buildQuery.call(this));
+  if (!! this.userId) {
+    return Classes.find(buildQuery.call(this));
+  } else {
+    return []
+  }
 });
 
 Meteor.publish('class', function(classId: string) {

@@ -8,7 +8,7 @@ import { Students } from '../../../../both/collections/students.collection'
 import template from './students-list.component.html'
 
 @Component({
-  selector: 'classesList',
+  selector: 'students-list',
   template
 })
 export class StudentsListComponent implements OnInit, OnDestroy {
@@ -22,7 +22,9 @@ export class StudentsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.studentsSub.unsubscribe();
+    if (!! this.studentsSub) {
+      this.studentsSub.unsubscribe();
+    }
   }
 /*
   removeParty(party: Party): void {

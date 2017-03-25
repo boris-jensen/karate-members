@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { routes, ROUTES_PROVIDERS } from './app.routes';
 import { PARTIES_DECLARATIONS } from './parties';
 import { STUDENTS_DECLARATIONS } from './students';
+import { CLASSES_DECLARATIONS } from './classes';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { STUDENTS_DECLARATIONS } from './students';
   declarations: [
     AppComponent,
     ...PARTIES_DECLARATIONS,
-    ...STUDENTS_DECLARATIONS
+    ...STUDENTS_DECLARATIONS,
+    ...CLASSES_DECLARATIONS
   ],
   providers: [
     ...ROUTES_PROVIDERS

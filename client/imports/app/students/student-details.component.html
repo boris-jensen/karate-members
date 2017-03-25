@@ -6,7 +6,7 @@
   <div *ngIf="classes">
     <ul>
       <li *ngFor="let klass of classes | async">
-        <a [routerLink]="['/class', klass._id]">{{klass.name}}</a>
+        <a [routerLink]="['/classes', klass._id]">{{klass.name}}</a>
       </li>
     </ul>
   </div>
@@ -25,4 +25,3 @@
     <p>{{student.contacts[0].phone}}</p>
     <p>{{student.contacts[0].email}}</p>
 </header>
-

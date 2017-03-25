@@ -35,8 +35,8 @@ export class StudentDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.paramsSub = this.route.params
       .map(params => params['studentId'])
-      .subscribe(partyId => {
-        this.studentId = partyId;
+      .subscribe(studentId => {
+        this.studentId = studentId;
         
         if (this.studentSub) {
           this.studentSub.unsubscribe();
@@ -57,9 +57,15 @@ export class StudentDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.paramsSub.unsubscribe();
-    this.classesSub.unsubscribe();
-    this.studentSub.unsubscribe();
+    if (!! this.paramsSub) {
+      this.paramsSub.unsubscribe();
+    }
+    if (!! this.classesSub) {
+      this.classesSub.unsubscribe();
+    }
+    if (!! this.studentSub) {
+      this.studentSub.unsubscribe();
+    }
   }
 
 /*

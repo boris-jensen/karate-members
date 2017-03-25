@@ -2,7 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Students } from '../../../both/collections/students.collection';
 
 Meteor.publish('students', function() {
-  return Students.find(buildQuery.call(this));
+  return Students.find({});
+//  return Students.find(buildQuery.call(this));
 });
 
 Meteor.publish('student', function(studentId: string) {
