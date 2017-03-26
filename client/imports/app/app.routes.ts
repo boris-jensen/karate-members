@@ -5,6 +5,7 @@ import { PartiesListComponent } from './parties/parties-list.component';
 import { PartyDetailsComponent } from './parties/party-details.component';
 import { StudentDetailsComponent } from './students/student-details.component';
 import { StudentsListComponent } from './students/students-list.component';
+import { StudentSignupComponent } from './students/student-signup.component'
 import { ClassesListComponent } from './classes/classes-list.component';
 import { ClassDetailsComponent } from './classes/class-details.component';
 
@@ -14,7 +15,8 @@ export const routes: Route[] = [
   { path: 'students', component: StudentsListComponent },
   { path: 'students/:studentId', component: StudentDetailsComponent, canActivate: ['canActivateForLoggedIn'] },
   { path: 'classes', component: ClassesListComponent },
-  { path: 'classes/:classId', component: ClassDetailsComponent, canActivate: ['canActivateForLoggedIn'] }
+  { path: 'classes/:classId', component: ClassDetailsComponent, canActivate: ['canActivateForLoggedIn'] },
+  { path: 'signup', component: StudentSignupComponent },
 ];
 
 export const ROUTES_PROVIDERS = [{
