@@ -4,12 +4,12 @@ import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router'
 import { Meteor } from 'meteor/meteor';
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import { MeteorObservable } from 'meteor-rxjs';
 import { Student } from '../../../../both/models/student.model'
 import { Students } from '../../../../both/collections/students.collection' 
 import { Class } from '../../../../both/models/class.model'
 import { Classes } from '../../../../both/collections/classes.collection'
-//import * as moment from 'moment'
+import * as moment from 'moment'
 
 import template from './student-signup.component.html'
 
@@ -19,9 +19,8 @@ import template from './student-signup.component.html'
 })
 export class StudentSignupComponent implements OnInit { //, OnDestroy {
   signupForm: FormGroup;
-//  classes: Observable<Class[]>
-  //classes: Observable<Class[]>;
-//  classesSub: Subscription;
+  classes: Observable<Class[]>;
+  classesSub: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,17 +28,18 @@ export class StudentSignupComponent implements OnInit { //, OnDestroy {
   ) { }
 
   ngOnInit() {
-//    this.classes = Classes.find({}).zone();
-  //  this.classesSub = MeteorObservable.subscribe('classes').subscribe();
+    this.classes = Classes.find({}).zone();
+    this.classesSub = MeteorObservable.subscribe('classes').subscribe();
     this.signupForm = this.formBuilder.group({
       name: ['', Validators.required],
-//      classes: [],
-  //    contacts: [{name: '', phone: '', email: ''}, Validators.required],
-      birthdate: ['', Validators.required]
-//      birthdate: [moment().format('DD-MM-YYYY'), Validators.required]
+      classes: [[], Validators.compose([Validators.required, Validators.minLength(1)])],
+      contacts: this.formBuilder.group({
+        name: ['', Validators.required],
+        phone: ['', Validators.required],
+        email: ['', Validators.required]
+      }),
+      birthdate: [moment().format('DD-MM-YYYY'), Validators.required]
     });
-//      contacts: [{name: '', phone: '', email: ''}],
-//    }
   }
 
   addParty(): void {
@@ -49,6 +49,8 @@ export class StudentSignupComponent implements OnInit { //, OnDestroy {
     }
 
     console.log('adding student')
+    const newStudent = Object.assign({}, this.signupForm.value, { sessions: [], hasPaid: false })
+    console.log(newStudent)
     if (this.signupForm.valid) {
       const newStudent = Object.assign({}, this.signupForm.value, { sessions: [], hasPaid: false })
       console.log(newStudent)
@@ -58,6 +60,9 @@ export class StudentSignupComponent implements OnInit { //, OnDestroy {
   //      console.log(JSON.stringify(err))
     //  })
       this.router.navigate(['/students']);
+    }
+    else {
+      console.log(this.signupForm.errors)
     }
   }
 }
