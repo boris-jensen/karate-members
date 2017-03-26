@@ -3,7 +3,8 @@ import { Meteor } from 'meteor/meteor';
 
 import { StudentDetailsComponent } from './students/student-details.component';
 import { StudentsListComponent } from './students/students-list.component';
-import { StudentSignupComponent } from './students/student-signup.component'
+import { StudentSignupComponent } from './students/student-signup.component';
+import { StudentsTrainingFeesComponent } from './students/students-training-fees.component';
 import { ClassesListComponent } from './classes/classes-list.component';
 import { ClassDetailsComponent } from './classes/class-details.component';
 import { FrontPageComponent } from './misc/frontpage.component';
@@ -16,6 +17,7 @@ export const routes: Route[] = [
   { path: 'classes', component: ClassesListComponent },
   { path: 'classes/:classId', component: ClassDetailsComponent, canActivate: ['canActivateForLoggedIn'] },
   { path: 'signup', component: StudentSignupComponent },
+  { path: 'payment', component: StudentsTrainingFeesComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -1,0 +1,16 @@
+<h2>Marker betalte elever</h2>
+<h5>(bare skift væk fra siden, når færdig, eleverne bliver opdateret automatisk)
+<form>
+  <div>
+    <ul>
+      <li *ngFor="let student of students | async">
+        <input 
+          type="checkbox" 
+          name="student" 
+          [checked]="student.hasPaid" 
+          (change)="updatePayment(student, $event)">
+          {{student.name}}
+      </li>
+    </ul>
+  </div>
+</form>
