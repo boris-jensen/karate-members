@@ -32,7 +32,7 @@ export class StudentSignupComponent implements OnInit, OnDestroy {
     this.classesSub = MeteorObservable.subscribe('classes').subscribe();
     this.signupForm = this.formBuilder.group({
       name: ['', Validators.required],
-      classes: [['1', '2'], Validators.required],
+      classes: [[], Validators.required],
       birthdate: [moment().format('DD-MM-YYYY'), Validators.required],
       contacts: this.formBuilder.array([
         this.makeContactForm()
