@@ -1,7 +1,7 @@
 
 <h3>Tilmeld elev</h3>
 
-<form [formGroup]="signupForm" (ngSubmit)="addParty()">
+<form [formGroup]="signupForm" (ngSubmit)="signup()">
   <div>
     <label for="name">Navn</label>
     <input id="name" type="text" formControlName="name">
@@ -20,18 +20,47 @@
   </div>
   <div formGroupName="contacts">
     <h4>Kontaktperson</h4>
-    <div>
-      <label for="contact.name">Navn</label>
-      <input id="contact.name" type="text" formControlName="name">
-    </div>
-    <div>
-      <label for="contact.phone">Telefon</label>
-      <input id="contact.phone" type="text" formControlName="phone">
-    </div>
-    <div>
-      <label for="contact.email">Email</label>
-      <input id="contact.email" type="text" formControlName="email">
+    <div class="form-group">
+      <label>Hobbies array:</label>
+      <div *ngFor="let contact of signupForm.get('contacts').controls; let i = index">
+        <div formGroupName="{{i}}">
+          <div>
+            <label>Navn</label>
+            <input id="contact.{{i}}.name" type="text" formControlName="name">
+          </div>
+          <div>
+            <label>Telefon</label>
+            <input id="contact.{{i}}.phone" type="text" formControlName="phone">
+          </div>
+          <div>
+            <label>Email</label>
+            <input id="contact.{{i}}.email" type="text" formControlName="email">
+          </div>
+          <button *ngIf="signupForm.get('contacts').length > 1" (click)="removeContact(i)">x</button>
+        </div>
+      </div>
+      <button (click)="onAddContact()">Tilføj kontaktperson</button>
     </div>
   </div>
-  <button>Tilføj elev</button>
+  <button type="submit">Tilføj elev</button>
 </form>
+
+
+
+
+  <!--div class="row" >
+    <div  formGroupName="hobbies">
+      <div class="form-group">
+        <label>Hobbies array:</label>
+        <div  *ngFor="let hobby of signupForm.get('hobbies').controls; let i = index">
+          <div formGroupName="{{i}}">
+            <input id="hobby_{{i}}" type="text" class="form-control"  formControlName="hobby">
+            <button *ngIf="signupForm.get('hobbies').length > 1" (click)="removeHobby(i)">x</button>
+          </div>
+        </div>
+        <button (click)="onAddHobby()">Add hobby</button>
+      </div>
+    </div>
+  </div>
+  <button type="submit" [disabled]="!signupForm.valid">Submit</button-->
+

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router'
 import { Meteor } from 'meteor/meteor';
 import { MeteorObservable } from 'meteor-rxjs';
@@ -17,7 +17,7 @@ import template from './student-signup.component.html'
   selector: 'student-signup',
   template
 })
-export class StudentSignupComponent implements OnInit { //, OnDestroy {
+export class StudentSignupComponent implements OnInit, OnDestroy {
   signupForm: FormGroup;
   classes: Observable<Class[]>;
   classesSub: Subscription;
@@ -32,29 +32,46 @@ export class StudentSignupComponent implements OnInit { //, OnDestroy {
     this.classesSub = MeteorObservable.subscribe('classes').subscribe();
     this.signupForm = this.formBuilder.group({
       name: ['', Validators.required],
-      classes: [[], Validators.compose([Validators.required, Validators.minLength(1)])],
-      contacts: this.formBuilder.group({
-        name: ['', Validators.required],
-        phone: ['', Validators.required],
-        email: ['', Validators.required]
-      }),
-      birthdate: [moment().format('DD-MM-YYYY'), Validators.required]
+      classes: [['1', '2'], Validators.required],
+      birthdate: [moment().format('DD-MM-YYYY'), Validators.required],
+      contacts: this.formBuilder.array([
+        this.makeContactForm()
+      ])
     });
   }
 
-  addParty(): void {
+  ngOnDestroy() {
+    if (!! this.classesSub) {
+      this.classesSub.unsubscribe()
+    }
+  }
+
+  removeContact(index: number){
+    (<FormArray>this.signupForm.get('contacts')).removeAt(index);
+  }
+
+  onAddContact() {
+    (<FormArray>this.signupForm.get('contacts')).push(this.makeContactForm())
+  }
+
+  makeContactForm(): FormGroup {
+    return this.formBuilder.group({
+      name: ['', Validators.required],
+      phone: ['', Validators.required],
+      email: ['', Validators.required]
+    })
+  }
+
+  signup(): void {
     if (!Meteor.userId()) {
       alert('Please log in to add a student');
       return;
     }
 
-    console.log('adding student')
-    const newStudent = Object.assign({}, this.signupForm.value, { sessions: [], hasPaid: false })
-    console.log(newStudent)
     if (this.signupForm.valid) {
       const newStudent = Object.assign({}, this.signupForm.value, { sessions: [], hasPaid: false })
       console.log(newStudent)
-//      Students.insert(newStudent);
+      Students.insert(newStudent);
       this.signupForm.reset();
 //      this.call('sendSignupAcknowledgement', this.student, (err) => {
   //      console.log(JSON.stringify(err))
@@ -62,7 +79,7 @@ export class StudentSignupComponent implements OnInit { //, OnDestroy {
       this.router.navigate(['/students']);
     }
     else {
-      console.log(this.signupForm.errors)
+      console.log('Errors')
     }
   }
 }

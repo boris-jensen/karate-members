@@ -20,8 +20,10 @@
     </ul>
   </div>
   <hr/>
-  <h3>Kontaktperson</h3>
-    <p>{{student.contacts[0].name}}</p>
-    <p>{{student.contacts[0].phone}}</p>
-    <p>{{student.contacts[0].email}}</p>
+  <h3>Kontaktpersoner</h3>
+  <div *ngFor="let contact of student.contacts">
+    <p>{{contact.name}}</p>
+    <p>{{contact.phone}}</p>
+    <p>{{contact.email}}</p>
+  </div>
 </header>
