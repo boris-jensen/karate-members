@@ -1,0 +1,19 @@
+<div *ngIf="attendanceForm">
+  <h2>Kryds af for: {{klass.name}}</h2>
+    <form [formGroup]="attendanceForm" (ngSubmit)="takeAttendance()">
+      <div>
+        <label for="date-box">Dato</label>
+        <input id="date-box" type="text" name="date" formControlName="date">
+      </div>
+      <ul formGroupName="attendees">
+        <li *ngFor="let student of attendanceForm.get('attendees').controls; let i = index" >
+          <div formGroupName="{{i}}" [ngClass]="{'has-paid': student.value.hasPaid, 'has-not-paid': !student.value.hasPaid}">
+            <label >{{student.value.name}}</label>
+            <input id="student.{{i}}.paid" type="checkbox" formControlName="present">
+          </div>
+        </li>
+      </ul>
+      <button type="submit">Kryds af</button>
+    </form>
+  </form>
+</div>
