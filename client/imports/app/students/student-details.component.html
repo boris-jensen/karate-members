@@ -1,4 +1,4 @@
-<header *ngIf="student">
+<div *ngIf="student">
   <h2>{{student.name}}</h2>
   <p>{{student.birthdate}}</p>
   <hr/>
@@ -21,9 +21,12 @@
   </div>
   <hr/>
   <h3>Kontaktpersoner</h3>
+  <hr/>
   <div *ngFor="let contact of student.contacts">
     <p>{{contact.name}}</p>
     <p>{{contact.phone}}</p>
     <p>{{contact.email}}</p>
+    <hr/>
   </div>
-</header>
+  <button (click)="editStudent()">Rediger elev</button>
+</div>

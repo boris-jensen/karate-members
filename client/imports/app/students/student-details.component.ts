@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Meteor } from 'meteor/meteor';
 import { MeteorObservable } from 'meteor-rxjs';
@@ -29,7 +29,8 @@ export class StudentDetailsComponent implements OnInit, OnDestroy {
   classesSub: Subscription;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -68,22 +69,7 @@ export class StudentDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-/*
-
-  saveParty() {
-    if (!Meteor.userId()) {
-      alert('Please log in to change this party');
-      return;
-    }
-    
-    Parties.update(this.party._id, {
-      $set: {
-        name: this.party.name,
-        description: this.party.description,
-        location: this.party.location
-      }
-    });
+  editStudent() {
+    this.router.navigate(['/students/edit/' + this.studentId])
   }
-*/
-  
 }

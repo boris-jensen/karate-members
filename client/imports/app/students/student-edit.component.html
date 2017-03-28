@@ -1,0 +1,49 @@
+<h3>Rediger elev</h3>
+
+<div >
+  <form [formGroup]="editForm" (ngSubmit)="edit()">
+    <div>
+      <label for="name">Navn</label>
+      <input id="name" type="text" formControlName="name">
+    </div>
+    <div>
+      <label for="birthdate">Fødselsdag (dd-mm-yyyy)</label>
+      <input id="birthdate" type="text" formControlName="birthdate">
+    </div>
+    <div>
+      <label>Hold</label>
+      <select multiple name="classes" formControlName="classes">
+        <option *ngFor="let klass of classes | async" [value]="klass._id">
+          {{klass.name}}
+        </option>
+      </select>
+    </div>
+    <div formGroupName="contacts">
+      <h4>Kontaktpersoner</h4>
+      <div class="form-group">
+        <div *ngFor="let contact of editForm.get('contacts').controls; let i = index">
+          <div formGroupName="{{i}}">
+            <div>
+              <label>Navn</label>
+              <input id="contact.{{i}}.name" type="text" formControlName="name">
+            </div>
+            <div>
+              <label>Telefon</label>
+              <input id="contact.{{i}}.phone" type="text" formControlName="phone">
+            </div>
+            <div>
+              <label>Email</label>
+              <input id="contact.{{i}}.email" type="text" formControlName="email">
+            </div>
+            <button *ngIf="editForm.get('contacts').length > 1" (click)="removeContact(i)">Fjern kontaktperson</button>
+          </div>
+        </div>
+        <button (click)="onAddContact()">Tilføj ekstra kontaktperson</button>
+      </div>
+      <hr>
+    </div>
+    <button type="submit" [disabled]="!editForm.valid">Accepter ændringer</button>
+  </form>
+
+</div>
+  

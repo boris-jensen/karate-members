@@ -1,4 +1,4 @@
-<header *ngIf="klass">
+<div *ngIf="klass">
   <h2>{{klass.name}}</h2>
   <button><a [routerLink]="['/attendance', klass._id]">Kryds af</a></button>
   <div *ngIf="students">
@@ -8,5 +8,4 @@
         </li>
     </ul>
   </div>
-</header>
-
+</div>
