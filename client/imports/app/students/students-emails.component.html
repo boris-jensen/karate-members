@@ -1,0 +1,38 @@
+<!--div *ngIf="paidForm">
+  <form [formGroup]="paidForm">
+    <div>
+      <label>Vis betalende</label>
+      <input type="checkbox" formControlName="paid">
+    </div>
+    <div>
+      <label>Vis ikke-betalende</label>
+      <input type="checkbox" formControlName="unpaid">
+    </div>
+  </form>
+</div>
+<form [formGroup]="classesForm">
+  <div>
+    <label>Hold</label>
+    <select multiple name="classes" formControlName="classes">
+      <option *ngFor="let klass of classes | async" [value]="klass._id">
+        {{klass.name}}
+      </option>
+    </select>
+  </div>
+</form-->
+
+<div *ngIf="checkedForm">
+  <form [formGroup]="checkedForm">
+    <ul formGroupName="selected">
+      <li *ngFor="let student of checkedForm.get('selected').controls; let i = index" >
+        <div formGroupName="{{i}}">
+          <label >{{student.value.name}}</label>
+          <input id="student.{{i}}" type="checkbox" formControlName="checked">
+        </div>
+      </li>
+    </ul>
+  </form>
+</div>
+<div>
+  Emails: {{emails | async}}
+</div>

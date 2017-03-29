@@ -11,7 +11,6 @@ import { Student } from '../../../../both/models/student.model'
 import { Students } from '../../../../both/collections/students.collection' 
 import { Class } from '../../../../both/models/class.model'
 import { Classes } from '../../../../both/collections/classes.collection'
-import { Selectable } from '../../../../both/models/selectable.model'
 import * as moment from 'moment'
 
 import template from './class-attendance.component.html'
