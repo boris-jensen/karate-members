@@ -20,110 +20,109 @@ import template from './students-emails.component.html'
 export class StudentsEmailsComponent implements OnInit {
 
   studentsSub: Subscription;
-  students: Observable<Student[]>
-  selectedStudents: Subject<String[]>
-  emails: Observable<String>
-  checkedForm: FormGroup
-/*  classes: Observable<Class[]>;
   classesSub: Subscription;
-  paid: Subject<boolean>
-  unpaid: Subject<boolean>
-  classIds: Subject<String[]>
+
   paidForm: FormGroup
-  classesForm: FormGroup */
+  classesForm: FormGroup
+  checkedForm: FormGroup
+
+  students: Observable<Student[]>
+  classes: Observable<Class[]>;
+
+  keepPaidFilters: Observable<boolean>
+  keepUnpaidFilters: Observable<boolean>
+  keepClassIdFilters: Observable<String[]>
+
+  filteredStudents: Observable<Student[]>
+  selectedStudents: Observable<String[]>
+  emails: Observable<String>
 
   constructor(private formBuilder: FormBuilder) { }
 
-  makeCheckedForm(student: Student): FormGroup {
-    return this.formBuilder.group({
-      checked: false,
-      name: student.name,
-      id: student._id
-    })
-  }
-
   ngOnInit() {
-    this.selectedStudents = new Subject<String[]>()
-    this.selectedStudents.subscribe(ss => console.log(ss))
-//    this.classIds = new Subject<String[]>()
-  //  this.classIds.subscribe(cs => console.log(cs))
-    //this.paid = new Subject<boolean>()
-//    this.unpaid = new Subject<boolean>()
-    this.emails = new Subject<String>()
-    this.students = Students.find().zone();
-    this.students.subscribe(ss => console.log(ss))
-
-/*    this.classes = Classes.find({}).zone();
-    this.classesSub = MeteorObservable.subscribe('classes').subscribe();
-
-    this.classesForm = this.formBuilder.group({
-      classes: [[], Validators.required],
-    });
-    this.classesForm.valueChanges.subscribe(val => this.classIds.next(val.classes))
-    
-
     this.paidForm = this.formBuilder.group({
       paid: [true, Validators.required],
       unpaid: [true, Validators.required]
     })
+    this.keepPaidFilters = this.paidForm.valueChanges.startWith(this.paidForm.value).map(value => value.paid)
+    this.keepUnpaidFilters = this.paidForm.valueChanges.startWith(this.paidForm.value).map(value => value.unpaid)
 
-    this.paidForm.valueChanges.subscribe(value => this.paid.next(value.paid))
-    this.paidForm.valueChanges.subscribe(value => this.unpaid.next(value.unpaid))
+    this.classes = Classes.find({}).zone();
+    this.classesSub = MeteorObservable.subscribe('classes').subscribe(() => {
+      this.classesForm = this.formBuilder.group({
+        classes: [[], Validators.required],
+      });
+      this.keepClassIdFilters = this.classesForm.valueChanges.startWith(this.classesForm.value).map(value => value.classes)
 
-    this.paid.subscribe(p => console.log(p))
-    this.unpaid.subscribe(u => console.log(u))
-    this.classIds.subscribe(cs => console.log(cs))
-    this.emails = this.students
-      .combineLatest(this.selectedStudents, this.paid, this.unpaid, this.classIds, 
-        (students, selected, paid, unpaid, classIds) => this.makeEmails(students, selected, paid, unpaid, classIds)) */
-
-    this.emails = this.students
-      .combineLatest(this.selectedStudents, 
-        (students, selectedStudents) => this.makeEmails(students, selectedStudents))
-    
-    this.studentsSub = MeteorObservable.subscribe('students').subscribe(() => {
-      this.students.subscribe(studs => {
-        this.checkedForm = this.formBuilder.group({
-          selected: this.formBuilder.array(
-            studs.map(stud => this.makeCheckedForm(stud))
-          )
-        });
-        this.checkedForm.valueChanges.subscribe(value => this.selectedStudents.next(value.selected.filter(val => val.checked).map(val => val.id)))
+      this.students = Students.find().zone();
+      this.checkedForm = this.formBuilder.group({
+        selected: this.formBuilder.array([])
+      });
+      
+      this.studentsSub = MeteorObservable.subscribe('students').subscribe(() => {
+        this.filteredStudents = this.students.combineLatest(this.keepPaidFilters, this.keepUnpaidFilters, this.keepClassIdFilters, this.filterStudents)
+        this.filteredStudents.subscribe(studs => {
+          const arr = (<FormArray>this.checkedForm.get('selected'))
+          while(arr.length > 0) {
+            arr.removeAt(0)
+          }
+          this.makeCheckedForms.bind(this)(studs).forEach((form: FormGroup) => arr.push(form))
+        })
+        this.selectedStudents = this.checkedForm.valueChanges.startWith(this.checkedForm.value).map(this.makeSelected)
+        this.emails = this.filteredStudents.combineLatest(this.selectedStudents, this.makeEmails)
+        this.filteredStudents.subscribe(console.log)
       })
-    });
-
-//    this.classIds.next(['1', '2', '3', '4', '5', '6', '7'])
-  //  this.paid.next(true)
-    //this.unpaid.next(true)
-    this.selectedStudents.next([])
+    })
   }
 
   ngOnDestroy() {
     if (!! this.studentsSub) {
       this.studentsSub.unsubscribe();
     }
+
+    if (!! this.classesSub) {
+      this.classesSub.unsubscribe();
+    }
+  }
+
+  filterStudents(students: Student[], keepPaid: boolean, keepUnpaid: boolean, keepClassIds: String[]): Student[] {
+    const arrayContains = function(array: String[], pred: (String) => boolean): boolean {
+      return array.findIndex(pred) > -1
+    }
+
+    return students.filter(student => {
+      const studentHasClassInKeepClasses = arrayContains(
+        student.classes, 
+        (classId: String) => arrayContains(
+          keepClassIds, 
+          (keepId: String) => classId === keepId))
+      const keepAllStudents = keepClassIds.length === 0
+      const keepForClass = keepAllStudents || studentHasClassInKeepClasses
+      const keepForPaid = student.hasPaid ? keepPaid : keepUnpaid
+      return keepForClass && keepForPaid
+    })
   }
 
   makeEmails(students: Student[], selected: String[]): String {
-    console.log('making emails')
     const nestedMails: String[][] = students
       .filter(student => selected.indexOf(student._id) >= 0)
       .map(student => student.contacts.map(contact => contact.email))
 
-    console.log(nestedMails)
     const mails: String[] = [].concat.apply([], nestedMails)
-    console.log(mails)
     return mails.join(';')
   }
 
-/*
-  makeEmails(students: Student[], selected: String[], paid: boolean, unpaid: boolean, classes: String[]): String {
-    console.log('making emails')
-    const nestedMails: String[][] = students
-      .filter(student => {
-        true})
-      .map(student => student.contacts.map(contact => contact.email))
-    const mails: String[] = [].concat.apply([], nestedMails)
-    return mails.join(';')
-  } */
+  makeCheckedForms(students: Student[]): FormGroup[] {
+    return students.map(student => 
+      this.formBuilder.group({
+        checked: true,
+        name: student.name,
+        id: student._id
+      })
+    )
+  }
+
+  makeSelected(value: {selected: {checked: boolean, name: String, id: String}[]}): String[] {
+    return value.selected.filter(val => val.checked).map(val => val.id)
+  }
 }
