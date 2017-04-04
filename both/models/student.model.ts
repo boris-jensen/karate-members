@@ -1,9 +1,9 @@
+import { CollectionObject } from './collection-object.model'
 import { ClassSession } from './classSession.model'
 import { Contact } from './contact.model'
 
-export interface Student {
+export interface Student extends CollectionObject {
   name: string
-  _id?: string
   classes: string[]
   hasPaid: boolean
   sessions: ClassSession[]

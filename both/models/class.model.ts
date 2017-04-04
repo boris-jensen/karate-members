@@ -1,4 +1,5 @@
-export interface Class {
+import { CollectionObject } from './collection-object.model'
+
+export interface Class extends CollectionObject {
   name: string
-  _id?: string
 }
