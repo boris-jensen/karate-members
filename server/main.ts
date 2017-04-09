@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import { loadStudents } from '../imports/server/fixtures/students';
 import { loadClasses } from '../imports/server/fixtures/classes';
-import { ensureUsers } from '../imports/server/users';
+import { loadUsers } from '../imports/server/fixtures/users';
 
 import '../imports/server/publications/students';
 import '../imports/server/publications/classes';
@@ -10,5 +10,5 @@ import '../imports/server/publications/classes';
 Meteor.startup(() => {
   loadClasses();
   loadStudents(); 
-  ensureUsers();
+  loadUsers();
 });
