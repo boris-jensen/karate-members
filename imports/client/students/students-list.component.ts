@@ -3,8 +3,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { MeteorObservable } from 'meteor-rxjs';
 
-import { Student } from '../../../../both/models/student.model'
-import { Students } from '../../../../both/collections/students.collection' 
+import { Student } from '../../both/models/student.model'
+import { Students } from '../../both/collections/students.collection' 
 import template from './students-list.component.html'
 
 @Component({

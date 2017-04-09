@@ -1,5 +1,5 @@
-import { Classes } from '../../../both/collections/classes.collection';
-import { Class } from '../../../both/models/class.model'
+import { Classes } from '../../both/collections/classes.collection';
+import { Class } from '../../both/models/class.model'
 
 export function loadClasses() {
   if (Classes.find().cursor.count() === 0) {

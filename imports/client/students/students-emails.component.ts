@@ -4,10 +4,10 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Meteor } from 'meteor/meteor';
 import { MeteorObservable } from 'meteor-rxjs';
 
-import { Student } from '../../../../both/models/student.model'
-import { Students } from '../../../../both/collections/students.collection' 
-import { Class } from '../../../../both/models/class.model'
-import { Classes } from '../../../../both/collections/classes.collection'
+import { Student } from '../../both/models/student.model'
+import { Students } from '../../both/collections/students.collection' 
+import { Class } from '../../both/models/class.model'
+import { Classes } from '../../both/collections/classes.collection'
 import * as moment from 'moment'
 
 import template from './students-emails.component.html'
@@ -70,7 +70,6 @@ export class StudentsEmailsComponent implements OnInit {
         })
         this.selectedStudents = this.checkedForm.valueChanges.startWith(this.checkedForm.value).map(this.makeSelected)
         this.emails = this.filteredStudents.combineLatest(this.selectedStudents, this.makeEmails)
-        this.filteredStudents.subscribe(console.log)
       })
     })
   }

@@ -5,10 +5,10 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router'
 import { Meteor } from 'meteor/meteor';
 import { MeteorObservable } from 'meteor-rxjs';
-import { Student } from '../../../../both/models/student.model'
-import { Students } from '../../../../both/collections/students.collection' 
-import { Class } from '../../../../both/models/class.model'
-import { Classes } from '../../../../both/collections/classes.collection'
+import { Student } from '../../both/models/student.model'
+import { Students } from '../../both/collections/students.collection' 
+import { Class } from '../../both/models/class.model'
+import { Classes } from '../../both/collections/classes.collection'
 import * as moment from 'moment'
 
 import template from './student-signup.component.html'

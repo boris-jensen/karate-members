@@ -7,10 +7,10 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 
-import { Classes } from '../../../../both/collections/classes.collection';
-import { Class } from '../../../../both/models/class.model'
-import { Students } from '../../../../both/collections/students.collection';
-import { Student } from '../../../../both/models/student.model';
+import { Classes } from '../../both/collections/classes.collection';
+import { Class } from '../../both/models/class.model'
+import { Students } from '../../both/collections/students.collection';
+import { Student } from '../../both/models/student.model';
 import template from './class-details.component.html'
 
 @Component({

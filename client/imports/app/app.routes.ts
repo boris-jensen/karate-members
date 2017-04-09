@@ -1,17 +1,17 @@
 import { Route } from '@angular/router';
 import { Meteor } from 'meteor/meteor';
 
-import { StudentDetailsComponent } from './students/student-details.component';
-import { StudentsListComponent } from './students/students-list.component';
-import { StudentSignupComponent } from './students/student-signup.component';
-import { StudentsTrainingFeesComponent } from './students/students-training-fees.component';
-import { StudentEditComponent } from './students/student-edit.component';
-import { StudentsEmailsComponent } from './students/students-emails.component';
-import { ClassesListComponent } from './classes/classes-list.component';
-import { ClassDetailsComponent } from './classes/class-details.component';
-import { ClassAttendanceComponent } from './classes/class-attendance.component';
-import { FrontPageComponent } from './misc/frontpage.component';
-import { PageNotFoundComponent } from './misc/page-not-found.component';
+import { StudentDetailsComponent } from '../../../imports/client/students/student-details.component';
+import { StudentsListComponent } from '../../../imports/client/students/students-list.component';
+import { StudentSignupComponent } from '../../../imports/client/students/student-signup.component';
+import { StudentsTrainingFeesComponent } from '../../../imports/client/students/students-training-fees.component';
+import { StudentEditComponent } from '../../../imports/client/students/student-edit.component';
+import { StudentsEmailsComponent } from '../../../imports/client/students/students-emails.component';
+import { ClassesListComponent } from '../../../imports/client/classes/classes-list.component';
+import { ClassDetailsComponent } from '../../../imports/client/classes/class-details.component';
+import { ClassAttendanceComponent } from '../../../imports/client/classes/class-attendance.component';
+import { FrontPageComponent } from '../../../imports/client/misc/frontpage.component';
+import { PageNotFoundComponent } from '../../../imports/client/misc/page-not-found.component';
 
 export const routes: Route[] = [
   { path: '', component: FrontPageComponent },

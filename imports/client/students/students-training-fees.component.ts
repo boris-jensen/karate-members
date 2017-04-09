@@ -4,9 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { MeteorObservable } from 'meteor-rxjs';
 
-import { Student } from '../../../../both/models/student.model'
-import { Students } from '../../../../both/collections/students.collection' 
-//import { Selectable } from '../../models/selectable.ts'
+import { Student } from '../../both/models/student.model'
+import { Students } from '../../both/collections/students.collection' 
 import template from './students-training-fees.component.html'
 
 @Component({

@@ -6,9 +6,9 @@ import { AccountsModule } from 'angular2-meteor-accounts-ui';
 
 import { AppComponent } from './app.component';
 import { routes, ROUTES_PROVIDERS } from './app.routes';
-import { STUDENTS_DECLARATIONS } from './students';
-import { CLASSES_DECLARATIONS } from './classes';
-import { MISC_DECLARATIONS } from './misc';
+import { STUDENTS_DECLARATIONS } from '../../../imports/client/students';
+import { CLASSES_DECLARATIONS } from '../../../imports/client/classes';
+import { MISC_DECLARATIONS } from '../../../imports/client/misc';
 
 @NgModule({
   imports: [

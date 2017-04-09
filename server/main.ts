@@ -1,11 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 
-import { loadStudents } from './imports/fixtures/students';
-import { loadClasses } from './imports/fixtures/classes';
-import { ensureUsers } from './imports/users';
+import { loadStudents } from '../imports/server/fixtures/students';
+import { loadClasses } from '../imports/server/fixtures/classes';
+import { ensureUsers } from '../imports/server/users';
 
-import './imports/publications/students';
-import './imports/publications/classes';
+import '../imports/server/publications/students';
+import '../imports/server/publications/classes';
 
 Meteor.startup(() => {
   loadClasses();

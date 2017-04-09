@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import { Classes } from '../../../both/collections/classes.collection';
-import { Student } from '../../../both/models/student.model';
+import { Classes } from '../../both/collections/classes.collection';
+import { Student } from '../../both/models/student.model';
 
 Meteor.publish('classes', function() {
   if (!! this.userId) {

@@ -1,5 +1,5 @@
-import { Students } from '../../../both/collections/students.collection';
-import { Student } from '../../../both/models/student.model'
+import { Students } from '../../both/collections/students.collection';
+import { Student } from '../../both/models/student.model'
 
 export function loadStudents() {
   if (Students.find().cursor.count() === 0) {
