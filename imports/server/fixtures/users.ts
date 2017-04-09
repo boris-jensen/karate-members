@@ -23,7 +23,6 @@ export function loadUsers() {
     Roles.addUsersToRoles(teacherId, [])
   }
 
-
   const accountantName = 'kasserer'
   const accountantMail = 'kasserer@esbjerg-karate.dk'
   if (! Accounts.findUserByUsername(accountantName)) {

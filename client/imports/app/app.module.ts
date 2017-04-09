@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
 import { AccountsModule } from 'angular2-meteor-accounts-ui';
 
 import { AppComponent } from './app.component';
-import { routes, ROUTES_PROVIDERS } from './app.routes';
+import { routes } from './app.routes';
+import { AuthGuard } from './auth-guard'
 import { STUDENTS_DECLARATIONS } from '../../../imports/client/students';
 import { CLASSES_DECLARATIONS } from '../../../imports/client/classes';
 import { MISC_DECLARATIONS } from '../../../imports/client/misc';
@@ -25,7 +26,7 @@ import { MISC_DECLARATIONS } from '../../../imports/client/misc';
     ...CLASSES_DECLARATIONS
   ],
   providers: [
-    ...ROUTES_PROVIDERS
+    AuthGuard,
   ],
   bootstrap: [
     AppComponent

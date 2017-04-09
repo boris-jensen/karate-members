@@ -1,0 +1,11 @@
+<form [formGroup]="signInForm" (ngSubmit)="signIn()">
+    <div>
+        <label for="username">Brugernavn</label>
+        <input id="username" type="text" name="username" formControlName="username">
+    </div>
+    <div>
+        <label for="password">Adgangskode</label>
+        <input id="password" type="password" name="password" formControlName="password">
+    </div>
+    <button type="submit">Log ind</button>
+</form>

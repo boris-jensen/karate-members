@@ -12,23 +12,21 @@ import { ClassDetailsComponent } from '../../../imports/client/classes/class-det
 import { ClassAttendanceComponent } from '../../../imports/client/classes/class-attendance.component';
 import { FrontPageComponent } from '../../../imports/client/misc/frontpage.component';
 import { PageNotFoundComponent } from '../../../imports/client/misc/page-not-found.component';
+import { SignInComponent } from '../../../imports/client/misc/sign-in.component' ;
+
+import { AuthGuard } from './auth-guard';
 
 export const routes: Route[] = [
-  { path: '', component: FrontPageComponent },
-  { path: 'students', component: StudentsListComponent },
-  { path: 'students/edit/:studentId', component: StudentEditComponent, canActivate: ['canActivateForLoggedIn'] },
-  { path: 'students/:studentId', component: StudentDetailsComponent, canActivate: ['canActivateForLoggedIn'] },
-  { path: 'emails', component: StudentsEmailsComponent, canActivate: ['canActivateForLoggedIn']},
-  { path: 'classes', component: ClassesListComponent },
-  { path: 'classes/:classId', component: ClassDetailsComponent, canActivate: ['canActivateForLoggedIn'] },
-  { path: 'attendance/:classId', component: ClassAttendanceComponent },
-  { path: 'signup', component: StudentSignupComponent },
-  { path: 'payment', component: StudentsTrainingFeesComponent },
-  { path: '**', component: PageNotFoundComponent }
+  { path: 'sign-in', component: SignInComponent },
+  { path: '', component: FrontPageComponent, canActivate: [AuthGuard] },
+  { path: 'students', component: StudentsListComponent, canActivate: [AuthGuard] },
+  { path: 'students/edit/:studentId', component: StudentEditComponent, canActivate: [AuthGuard] },
+  { path: 'students/:studentId', component: StudentDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'emails', component: StudentsEmailsComponent, canActivate: [AuthGuard] },
+  { path: 'classes', component: ClassesListComponent, canActivate: [AuthGuard] },
+  { path: 'classes/:classId', component: ClassDetailsComponent , canActivate: [AuthGuard]},
+  { path: 'attendance/:classId', component: ClassAttendanceComponent, canActivate: [AuthGuard] },
+  { path: 'signup', component: StudentSignupComponent, canActivate: [AuthGuard] },
+  { path: 'payment', component: StudentsTrainingFeesComponent, canActivate: [AuthGuard] },
+  { path: '**', component: PageNotFoundComponent, canActivate: [AuthGuard] }
 ];
-
-
-export const ROUTES_PROVIDERS = [{
-  provide: 'canActivateForLoggedIn',
-  useValue: () => !! Meteor.userId()
-}];

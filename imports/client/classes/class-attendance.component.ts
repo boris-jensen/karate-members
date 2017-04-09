@@ -20,7 +20,7 @@ import template from './class-attendance.component.html'
   template
 })
 
-export class ClassAttendanceComponent implements OnInit {
+export class ClassAttendanceComponent implements OnInit, OnDestroy {
 
   studentsSub: Subscription;
   paramsSub: Subscription;
