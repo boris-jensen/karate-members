@@ -1,4 +1,4 @@
-import { KarateRoles } from '../../both/auth/roles'
+import { KarateRoles } from '../../both/permissions/roles'
 import { Roles } from 'meteor/alanning:roles';
 
 export function loadUsers() {

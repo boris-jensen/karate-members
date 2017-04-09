@@ -1,19 +1,20 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" [routerLink]="['/']">Esbjerg Shuri Ryu Karate</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a [routerLink]="['/students']">Elever</a></li>
-            <li><a [routerLink]="['/classes']">Hold</a></li>
-            <li><a [routerLink]="['/signup']">Tilmelding</a></li>
-            <li><a [routerLink]="['/payment']">Kasserer</a></li>
-            <li><a [routerLink]="['/emails']">Emails</a></li>
-            <li><a><login-buttons></login-buttons></a></li>
-          </ul>
-        </div>
-      </div>
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" [routerLink]="['/']">Esbjerg Shuri Ryu Karate</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li *ngIf="loggedIn | async"><a [routerLink]="['/students']">Elever</a></li>
+        <li *ngIf="loggedIn | async"><a [routerLink]="['/classes']">Hold</a></li>
+        <li *ngIf="loggedIn | async"><a [routerLink]="['/signup']">Tilmelding</a></li>
+        <li *ngIf="canSetPayments | async"><a [routerLink]="['/payment']">Kasserer</a></li>
+        <li *ngIf="canViewEmails | async"><a [routerLink]="['/emails']">Emails</a></li>
+        <li *ngIf="loggedIn | async"><a (click)="logout()">Log ud</a></li>
+        <li *ngIf="loggedIn | async"><a>Velkommen {{ username | async }}</a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
 <div class="container app-content">
