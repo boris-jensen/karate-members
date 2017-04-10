@@ -107,8 +107,11 @@ export class StudentsEmailsComponent implements OnInit {
       .filter(student => selected.indexOf(student._id) >= 0)
       .map(student => student.contacts.map(contact => contact.email))
 
-    const mails: String[] = [].concat.apply([], nestedMails)
-    return mails.join(';')
+    const mails: String[] = [].concat.apply([], nestedMails).map((mail: string) => mail.replace(/^\s+|\s+$/g, ''))
+
+    return mails
+      .filter(function(item, i, ar){ return ar.indexOf(item) === i; })
+      .join(';')
   }
 
   makeCheckedForms(students: Student[]): FormGroup[] {
