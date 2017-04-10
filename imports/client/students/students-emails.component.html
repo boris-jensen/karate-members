@@ -1,4 +1,4 @@
-<!--form [formGroup]="paidForm">
+<form [formGroup]="paidForm">
   <div>
     <label>Vis betalende</label>
     <input type="checkbox" formControlName="paid">
@@ -8,42 +8,9 @@
     <input type="checkbox" formControlName="unpaid">
   </div>
 </form>
-<form [formGroup]="classesForm">
-  <div>
-    <label>Hold</label>
-    <select multiple name="classes" formControlName="classes">
-      <option *ngFor="let klass of classes | async" [value]="klass._id">
-        {{klass.name}}
-      </option>
-    </select>
-  </div>
-</form>
-<form [formGroup]="checkedForm">
-  <ul formGroupName="selected">
-    <li *ngFor="let student of checkedForm.get('selected').controls; let i = index" >
-      <div formGroupName="{{i}}">
-        <label >{{student.value.name}}</label>
-        <input id="student.{{i}}" type="checkbox" formControlName="checked">
-      </div>
-    </li>
-  </ul>
-</form>
-<div>
-  Emails: {{emails | async}}
-</div-->
-
-
-<div *ngIf="paidForm">
-  <form [formGroup]="paidForm">
-    <div>
-      <label>Vis betalende</label>
-      <input type="checkbox" formControlName="paid">
-    </div>
-    <div>
-      <label>Vis ikke-betalende</label>
-      <input type="checkbox" formControlName="unpaid">
-    </div>
-  </form>
+<div [formGroup]="longDistanceForm">
+  <label>Vis langdistance medlemmer i stedet for aktive</label>
+  <input type="checkbox" formControlName="showLongDistance">
 </div>
 <div *ngIf="classesForm">
   <form [formGroup]="classesForm">

@@ -10,7 +10,8 @@ export function loadStudents() {
         sessions: [{ class: '5', date: '1. oktober'}, {class: '5', date: '8. oktober'}, {class: '6', date: '3. oktober'}, {class: '6', date: '10. oktober'}, {class: '7', date: '7. oktober'}],
         hasPaid: true,
         contacts: [{name: 'Boris Jensen', phone: '28927422', email: 'boris_jensen@hotmail.com'}],
-        birthdate: '20-05-2016'
+        birthdate: '20-05-2016',
+        active: true
       },
       {
         name: 'Marie Karkov',
@@ -18,7 +19,8 @@ export function loadStudents() {
         sessions: [{ class: '5', date: '1. oktober'}, {class: '5', date: '8. oktober'}, {class: '6', date: '3. oktober'}, {class: '6', date: '10. oktober'}],
         hasPaid: false,
         contacts: [{name: 'Boris Jensen', phone: '28927422', email: 'boris_jensen@hotmail.com'}],
-        birthdate: '20-05-2016'
+        birthdate: '20-05-2016',
+        active: true
       },
       {
         name: 'Maria Lillistone',
@@ -26,7 +28,8 @@ export function loadStudents() {
         sessions: [{ class: '3', date: '1. oktober'}, {class: '3', date: '8. oktober'}],
         hasPaid: false,
         contacts: [{name: 'Boris Jensen', phone: '28927422', email: 'boris_jensen@hotmail.com'}],
-        birthdate: '20-05-2016'
+        birthdate: '20-05-2016',
+        active: true
       },
       {
         name: 'Lasse Luttermann',
@@ -34,7 +37,8 @@ export function loadStudents() {
         sessions: [{ class: '3', date: '1. oktober'}, {class: '3', date: '8. oktober'}, {class: '4', date: '3. oktober'}, {class: '4', date: '10. oktober'}],
         hasPaid: true,
         contacts: [{name: 'Boris Jensen', phone: '28927422', email: 'boris_jensen@hotmail.com'}],
-        birthdate: '20-05-2016'
+        birthdate: '20-05-2016',
+        active: true
       },
       {
         name: 'Emil Tonnesen',
@@ -42,7 +46,8 @@ export function loadStudents() {
         sessions: [{ class: '1', date: '30. september'}, {class: '1', date: '7. oktober'}, {class: '2', date: '3. oktober'}, {class: '2', date: '10. oktober'}],
         hasPaid: false,
         contacts: [{name: 'Boris Jensen', phone: '28927422', email: 'boris_jensen@hotmail.com'}],
-        birthdate: '20-05-2016'
+        birthdate: '20-05-2016',
+        active: true
       },
       {
         name: 'Valdemar Brinck',
@@ -50,7 +55,8 @@ export function loadStudents() {
         sessions: [{ class: '1', date: '30. september'}, {class: '1', date: '7. oktober'}, {class: '2', date: '3. oktober'}, {class: '2', date: '10. oktober'}],
         hasPaid: true,
         contacts: [{name: 'Boris Jensen', phone: '28927422', email: 'boris_jensen@hotmail.com'}],
-        birthdate: '20-05-2016'
+        birthdate: '20-05-2016',
+        active: true
       },
     ];
  

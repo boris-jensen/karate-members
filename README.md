@@ -1,7 +1,6 @@
 Todo:
 
 Deployment
-State for students: active, passive, retired
 Seasons
 Datepicker for dates
 Pictures of students

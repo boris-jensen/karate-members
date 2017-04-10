@@ -17,7 +17,7 @@ export class StudentsListComponent implements OnInit, OnDestroy {
   studentsSub: Subscription;
 
   ngOnInit() {
-    this.students = Students.find({}).zone();
+    this.students = Students.find({ active: true }).zone();
     this.studentsSub = MeteorObservable.subscribe('students').subscribe();
   }
 
@@ -26,12 +26,4 @@ export class StudentsListComponent implements OnInit, OnDestroy {
       this.studentsSub.unsubscribe();
     }
   }
-/*
-  removeParty(party: Party): void {
-    Parties.remove(party._id);
-  }
-
-  search(value: string): void {
-    this.parties = Parties.find(value ? { location: value } : {}).zone();
-  }*/
 }

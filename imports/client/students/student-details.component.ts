@@ -72,4 +72,10 @@ export class StudentDetailsComponent implements OnInit, OnDestroy {
   editStudent() {
     this.router.navigate(['/students/edit/' + this.studentId])
   }
+
+  deactivateStudent() {
+    const doDeactivate = confirm('Vil du virkelig udmelde ' + this.student.name)
+    Students.update(this.studentId, { $set: { active: false, classes: [] }});
+    this.router.navigate(['/students'])
+  }
 }

@@ -25,6 +25,7 @@ export class StudentsEmailsComponent implements OnInit {
   paidForm: FormGroup
   classesForm: FormGroup
   checkedForm: FormGroup
+  longDistanceForm: FormGroup
 
   students: Observable<Student[]>
   classes: Observable<Class[]>;
@@ -32,6 +33,7 @@ export class StudentsEmailsComponent implements OnInit {
   keepPaidFilters: Observable<boolean>
   keepUnpaidFilters: Observable<boolean>
   keepClassIdFilters: Observable<String[]>
+  showLongDistanceFilters: Observable<boolean>
 
   filteredStudents: Observable<Student[]>
   selectedStudents: Observable<String[]>
@@ -47,6 +49,11 @@ export class StudentsEmailsComponent implements OnInit {
     this.keepPaidFilters = this.paidForm.valueChanges.startWith(this.paidForm.value).map(value => value.paid)
     this.keepUnpaidFilters = this.paidForm.valueChanges.startWith(this.paidForm.value).map(value => value.unpaid)
 
+    this.longDistanceForm = this.formBuilder.group({
+      showLongDistance: [false, Validators.required]
+    })
+    this.showLongDistanceFilters = this.longDistanceForm.valueChanges.startWith(this.longDistanceForm.value).map(value => value.showLongDistance)
+
     this.classes = Classes.find({}).zone();
     this.classesSub = MeteorObservable.subscribe('classes').subscribe(() => {
       this.classesForm = this.formBuilder.group({
@@ -54,13 +61,13 @@ export class StudentsEmailsComponent implements OnInit {
       });
       this.keepClassIdFilters = this.classesForm.valueChanges.startWith(this.classesForm.value).map(value => value.classes)
 
-      this.students = Students.find().zone();
+      this.students = Students.find({ active: true }).zone();
       this.checkedForm = this.formBuilder.group({
         selected: this.formBuilder.array([])
       });
       
       this.studentsSub = MeteorObservable.subscribe('students').subscribe(() => {
-        this.filteredStudents = this.students.combineLatest(this.keepPaidFilters, this.keepUnpaidFilters, this.keepClassIdFilters, this.filterStudents)
+        this.filteredStudents = this.students.combineLatest(this.keepPaidFilters, this.keepUnpaidFilters, this.keepClassIdFilters, this.showLongDistanceFilters, this.filterStudents)
         this.filteredStudents.subscribe(studs => {
           const arr = (<FormArray>this.checkedForm.get('selected'))
           while(arr.length > 0) {
@@ -84,7 +91,7 @@ export class StudentsEmailsComponent implements OnInit {
     }
   }
 
-  filterStudents(students: Student[], keepPaid: boolean, keepUnpaid: boolean, keepClassIds: String[]): Student[] {
+  filterStudents(students: Student[], keepPaid: boolean, keepUnpaid: boolean, keepClassIds: String[], showLongDistance: boolean): Student[] {
     const arrayContains = function(array: String[], pred: (String) => boolean): boolean {
       return array.findIndex(pred) > -1
     }
@@ -97,8 +104,9 @@ export class StudentsEmailsComponent implements OnInit {
           (keepId: String) => classId === keepId))
       const keepAllStudents = keepClassIds.length === 0
       const keepForClass = keepAllStudents || studentHasClassInKeepClasses
+      const keepForClassOrLongDistance = showLongDistance ? student.classes.length === 0 : keepForClass && student.classes.length > 0
       const keepForPaid = student.hasPaid ? keepPaid : keepUnpaid
-      return keepForClass && keepForPaid
+      return keepForClassOrLongDistance && keepForPaid
     })
   }
 

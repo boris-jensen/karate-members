@@ -9,4 +9,5 @@ export interface Student extends CollectionObject {
   sessions: ClassSession[]
   contacts: Contact[]
   birthdate: string
+  active: boolean
 }
