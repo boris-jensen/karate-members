@@ -15,6 +15,8 @@ import { PageNotFoundComponent } from '../../../imports/client/misc/page-not-fou
 import { SignInComponent } from '../../../imports/client/misc/sign-in.component' ;
 
 import { AuthGuard } from './auth-guard';
+import { EmailsGuard } from './emails-guard'
+import { PaymentsGuard } from './payments-guard'
 
 export const routes: Route[] = [
   { path: 'sign-in', component: SignInComponent },
@@ -22,11 +24,11 @@ export const routes: Route[] = [
   { path: 'students', component: StudentsListComponent, canActivate: [AuthGuard] },
   { path: 'students/edit/:studentId', component: StudentEditComponent, canActivate: [AuthGuard] },
   { path: 'students/:studentId', component: StudentDetailsComponent, canActivate: [AuthGuard] },
-  { path: 'emails', component: StudentsEmailsComponent, canActivate: [AuthGuard] },
+  { path: 'emails', component: StudentsEmailsComponent, canActivate: [AuthGuard, EmailsGuard] },
   { path: 'classes', component: ClassesListComponent, canActivate: [AuthGuard] },
   { path: 'classes/:classId', component: ClassDetailsComponent , canActivate: [AuthGuard]},
   { path: 'attendance/:classId', component: ClassAttendanceComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: StudentSignupComponent, canActivate: [AuthGuard] },
-  { path: 'payment', component: StudentsTrainingFeesComponent, canActivate: [AuthGuard] },
+  { path: 'payment', component: StudentsTrainingFeesComponent, canActivate: [AuthGuard, PaymentsGuard] },
   { path: '**', component: PageNotFoundComponent, canActivate: [AuthGuard] }
 ];

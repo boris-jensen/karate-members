@@ -4,17 +4,19 @@ import { MeteorObservable } from 'meteor-rxjs';
 import { Meteor } from 'meteor/meteor';
 import { Router } from '@angular/router';
 import { Option, None, Some } from 'option-t';
-
 import { Roles } from 'meteor/alanning:roles'
 import { KarateRoles } from '../../../imports/both/permissions/roles'
 
 @Injectable()
 export class UserService {
 
-  private user: BehaviorSubject<Option<Meteor.User>>
+  private userStream: BehaviorSubject<Option<Meteor.User>>
+  private currentUser: Option<Meteor.User>
 
   constructor(private router: Router) {
-    this.user = new BehaviorSubject<Option<Meteor.User>>(new None())
+    const user = Meteor.user()
+    this.currentUser = user ? new Some(user) : new None()
+    this.userStream = new BehaviorSubject<Option<Meteor.User>>(this.currentUser)
   }
 
   signIn(username: string, password: string): void {
@@ -22,24 +24,30 @@ export class UserService {
       if (error) {
           console.log(error);
       } else {
-        this.user.next(new Some(Meteor.user()))
+        this.currentUser = new Some(Meteor.user())
+        this.userStream.next(this.currentUser)
         this.router.navigate(['/'])
       }
     });
   }
 
   signOut(): void {
-    const logout = Observable.of(Meteor.logout());
-    logout.subscribe(
-        () => {
-          this.user.next(new None())
-          this.router.navigate(['/sign-in'])
-        },
-        error => console.log(error)
-    );
+    Meteor.logout((error) => {
+      if (error) {
+          console.log(error);
+      } else {
+        this.currentUser = new None()
+        this.userStream.next(this.currentUser)
+        this.router.navigate(['/sign-in'])
+      }
+    })
   }
 
-  userStream(): Observable<Option<Meteor.User>> {
-    return this.user
+  getUserStream(): Observable<Option<Meteor.User>> {
+    return this.userStream
+  }
+
+  getCurrentUser(): Option<Meteor.User> {
+    return this.currentUser
   }
 }

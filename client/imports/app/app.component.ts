@@ -1,7 +1,8 @@
-import { Component } from '@angular/core'
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'
 import { Observable } from 'rxjs/Rx'
 import { Roles } from 'meteor/alanning:roles'
-import { Option, None, Some } from 'option-t';
+import { Option, None, Some } from 'option-t'
+import { Router } from '@angular/router'
 import { UserService } from '../../../imports/client/services/users.service'
 import { KarateRoles } from '../../../imports/both/permissions/roles'
 import template from './app.component.html'
@@ -10,7 +11,7 @@ import template from './app.component.html'
   selector: 'app',
   template
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   loggedIn: Observable<boolean>
   username: Observable<string>
@@ -18,16 +19,26 @@ export class AppComponent {
   canViewEmails: Observable<boolean>
   canManageUsers: Observable<boolean>
 
-  constructor(private userService: UserService) { 
-    const user = this.userService.userStream()
-    this.loggedIn = user.map(user => user.isSome ? true : false)
-    this.username = user.map(user => user.isSome ? user.unwrap().username : '')
-    this.canSetPayments = user.map(user => user.isSome ? Roles.userIsInRole(user.unwrap()._id, KarateRoles.setPayments) : false)
-    this.canViewEmails = user.map(user => user.isSome ? Roles.userIsInRole(user.unwrap()._id, KarateRoles.viewEmails) : false)
-    this.canManageUsers = user.map(user => user.isSome ? Roles.userIsInRole(user.unwrap()._id, KarateRoles.manageUsers) : false)
+  constructor(private userService: UserService, private cdr: ChangeDetectorRef, private router: Router) { }
+
+  isLoggedIn: boolean
+
+  ngOnInit() {
+    const self = this
+    const user = this.userService.getUserStream()
+    this.loggedIn = user.map(user => user.isSome)
+    this.username = user.map(user => user.map(u => u.username).unwrapOr(''))
+    this.canSetPayments = user.map(this.hasRole(KarateRoles.setPayments))
+    this.canViewEmails = user.map(this.hasRole(KarateRoles.viewEmails))
+    this.canManageUsers = user.map(this.hasRole(KarateRoles.manageUsers))
+    this.router.events.subscribe(x => self.cdr.detectChanges())
   }
 
   logout(): void {
     this.userService.signOut()
+  }
+
+  private hasRole(role: String): (user: Option<Meteor.User>) => boolean {
+    return user => user.map(u => Roles.userIsInRole(u._id, role)).unwrapOr(false)
   }
 }
