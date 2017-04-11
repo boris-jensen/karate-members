@@ -21,7 +21,7 @@ export class StudentsTrainingFeesComponent implements OnInit, OnDestroy {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.students = Students.find({}).zone();
+    this.students = Students.find({ active: true }).zone();
     this.studentsSub = MeteorObservable.subscribe('students').subscribe();
   }
 
