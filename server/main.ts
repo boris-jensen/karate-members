@@ -7,6 +7,8 @@ import { loadUsers } from '../imports/server/fixtures/users';
 import '../imports/server/publications/students';
 import '../imports/server/publications/classes';
 
+import '../imports/both/methods/mail'
+
 Meteor.startup(() => {
   loadClasses();
   loadStudents(); 

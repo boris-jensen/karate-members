@@ -1,7 +1,7 @@
 
 <h3>Tilmeld elev</h3>
 
-<form [formGroup]="signupForm" (ngSubmit)="signup()">
+<form [formGroup]="signupForm">
   <div>
     <label for="name">Navn</label>
     <input id="name" type="text" formControlName="name">
@@ -42,5 +42,5 @@
     </div>
     <hr>
   </div>
-  <button type="submit" [disabled]="!signupForm.valid">Tilføj elev</button>
+  <button type="submit" (click)="signup()" [disabled]="!signupForm.valid">Tilføj elev</button>
 </form>

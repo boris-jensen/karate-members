@@ -72,13 +72,15 @@ export class StudentSignupComponent implements OnInit, OnDestroy {
       const newStudent = Object.assign({}, this.signupForm.value, { sessions: [], hasPaid: false, active: true })
       Students.insert(newStudent);
       this.signupForm.reset();
-      Meteor.call('sendSignupAcknowledgement', newStudent, (err) => {
-        console.log(JSON.stringify(err))
-      })
       this.router.navigate(['/students']);
+      Meteor.call('sendSignupAcknowledgement', newStudent, (err) => {
+        if (err) {
+          alert('Email call returned error: ' + JSON.stringify(err))
+        } 
+      }) 
     }
     else {
-      console.log('Errors')
+      alert('invalid form')
     }
   }
 }
