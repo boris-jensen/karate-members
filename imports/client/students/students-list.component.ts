@@ -17,7 +17,7 @@ export class StudentsListComponent implements OnInit, OnDestroy {
   studentsSub: Subscription;
 
   ngOnInit() {
-    this.students = Students.find({ active: true }).zone();
+    this.students = Students.find({ active: true }, {sort: {name: 1}}).zone();
     this.studentsSub = MeteorObservable.subscribe('students').subscribe();
   }
 
