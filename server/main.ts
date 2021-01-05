@@ -9,6 +9,7 @@ import '../imports/server/publications/classes';
 
 import '../imports/both/methods/mail'
 
+
 Meteor.startup(() => {
   loadClasses();
   loadStudents(); 
